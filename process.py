@@ -18,14 +18,13 @@ def resize_img(filename):
 
 for content in source_files:
 
-    if os.path.isfile(os.path.join(resize_folder, content)) is False:
-        resize_img(content)
+    resize_img(content)
 
     for style in source_files:
 
         for alg in ["gatys", "chen-schmidt", "chen-schmidt-inverse"]:
 
-            if os.path.isfile("{0}_{1}_{2}_ss1.0_sw5.0.png".format(content, style, alg)) is False:
+            if content != style and os.path.isfile("{0}_{1}_{2}_ss1.0_sw5.0.png".format(content, style, alg)) is False:
                 command = "nvidia-docker run --rm -v {0}:/images albarji/neural-style --content resized/{1} --style resized/{2} --alg {3}".format(repo, content, style, alg)
                 print(command)
                 subprocess.call(shlex.split(command))

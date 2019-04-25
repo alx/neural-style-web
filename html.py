@@ -15,7 +15,7 @@ previous = ''
 
 def filterInputFiles(file, i):
     split = file.split('_')
-    return split[0] == i and split[1] != i
+    return split[0] == i
 
 def groupInputs(inputs):
     groups = {}
