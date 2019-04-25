@@ -19,7 +19,7 @@ def resize_img(filename):
 for content in source_files:
 
     if os.path.isfile(os.path.join(resize_folder, content)) is False:
-        resize_img(os.path.join(resize_folder, content))
+        resize_img(content)
 
     for style in source_files:
 
