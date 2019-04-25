@@ -13,6 +13,20 @@ inputs = list(set([f.split('_')[0] for f in files]))
 
 previous = ''
 
+def filterInputFiles(file, i):
+    split = file.split('_')
+    return split[0] == i and split[1] != i
+
+def groupInputs(inputs):
+    groups = {}
+    for f in inputs:
+        split = f.split('_')
+        try:
+            groups[split[1]].append(f)
+        except KeyError:
+            groups[split[1]] = [f]
+    return groups.values()
+
 with document(title='') as doc:
 
     with doc.head:
@@ -23,16 +37,26 @@ with document(title='') as doc:
     with div(_class='container-fluid') as container:
         for i in inputs:
 
+            input_files = filter(lambda file: filterInputFiles(file, i), files)
+            input_groups = groupInputs(input_files)
+
             with div(_class='item row') as row:
 
                 with div(_class='original col-2') as col:
                     div(img(src="original/{0}.jpg".format(i), _class="img-fluid", title=f), _class='output')
 
-                with div(_class='neural col-10 text-center') as col:
-                    for f in files:
-                        current = f.split('_')[0]
-                        if f.split('_')[0] == i and f.split('_')[1] != i:
-                            div(img(src=f, _class="img-fluid float-left", title=f, style="max-width:200px"), _class='output')
+                with div(_class='neural col-10') as col:
+                    for group in input_groups:
+                        with div(_class="row") as group_row:
+                            for f in group:
+                                params = f.split('_')
+                                div([
+                                    img(src=f, _class="card-img-top", title=f),
+                                    div([
+                                        h5(params[1], _class="card-title"),
+                                        p(params[2], _class="card-text")
+                                    ], _class="card-body")
+                                ], _class='card float-left', style="max-width:400px")
 
         script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", integrity="", crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js", integrity="", crossorigin="anonymous")
