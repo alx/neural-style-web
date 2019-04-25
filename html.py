@@ -3,7 +3,9 @@ import os.path
 from dominate import document
 from dominate.tags import *
 
-repo = "/opt/platform/data/images"
+# Mandatory endslash to avoid absolute/relative path issue with img src
+repo = "/opt/platform/data/images/"
+
 outputs = glob.glob(os.path.join(repo, '*.jpg'))
 
 with document(title='') as doc:
