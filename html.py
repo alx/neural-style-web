@@ -8,8 +8,8 @@ from dominate.util import raw
 repo = "/opt/platform/data/images/"
 
 outputs = glob.glob(os.path.join(repo, '*.jpg'))
-files = sorted([w.replace(repo, '') for w in outputs])
-inputs = list(set([f.split('_')[0] for f in files]))
+files = [w.replace(repo, '') for w in outputs]
+inputs = sorted(list(set([f.split('_')[0] for f in files])))
 
 previous = ''
 
