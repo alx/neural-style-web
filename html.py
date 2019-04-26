@@ -48,7 +48,7 @@ with document(title='') as doc:
                 with div(_class='neural col-10') as col:
                     for group in input_groups:
                         with div(_class="row") as group_row:
-                            for f in group:
+                            for f in sorted(group, key=lambda f: f.split('_')[2]):
                                 params = f.split('_')
                                 div([
                                     img(src=f, _class="card-img-top", title=f),
